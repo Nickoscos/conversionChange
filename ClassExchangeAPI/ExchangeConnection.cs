@@ -4,8 +4,10 @@
     {
         public class Rootobject
         {
-            public string base { get; set; }
-            public rates[] rates { get; set; }
+            public string @base { get; set; }
+
+            /*public ratesM[] rates { get; set; }*/
+            public Dictionary<string, float>? rates { get; set; }
 
             public string source { get; set; }
 
@@ -14,7 +16,7 @@
             public string putISODate { get; set; }
         }
 
-        public class rates
+        public class ratesM
         {
             public float USD { get; set; }
             public float JPY { get; set;}

@@ -45,13 +45,14 @@
             buttonEuro = new Button();
             buttonDCAN = new Button();
             buttonDUS = new Button();
-            label1 = new Label();
+            unit = new Label();
+            tauxActu = new Label();
             SuspendLayout();
             // 
             // button1
             // 
             button1.BackColor = SystemColors.ControlLight;
-            button1.Location = new Point(12, 89);
+            button1.Location = new Point(12, 105);
             button1.Name = "button1";
             button1.Size = new Size(97, 77);
             button1.TabIndex = 0;
@@ -62,7 +63,7 @@
             // button2
             // 
             button2.BackColor = SystemColors.ControlLight;
-            button2.Location = new Point(129, 89);
+            button2.Location = new Point(129, 105);
             button2.Name = "button2";
             button2.Size = new Size(97, 77);
             button2.TabIndex = 1;
@@ -73,7 +74,7 @@
             // button3
             // 
             button3.BackColor = SystemColors.ControlLight;
-            button3.Location = new Point(244, 89);
+            button3.Location = new Point(244, 105);
             button3.Name = "button3";
             button3.Size = new Size(97, 77);
             button3.TabIndex = 2;
@@ -84,7 +85,7 @@
             // button6
             // 
             button6.BackColor = SystemColors.ControlLight;
-            button6.Location = new Point(244, 172);
+            button6.Location = new Point(244, 188);
             button6.Name = "button6";
             button6.Size = new Size(97, 77);
             button6.TabIndex = 5;
@@ -95,7 +96,7 @@
             // button5
             // 
             button5.BackColor = SystemColors.ControlLight;
-            button5.Location = new Point(129, 172);
+            button5.Location = new Point(129, 188);
             button5.Name = "button5";
             button5.Size = new Size(97, 77);
             button5.TabIndex = 4;
@@ -106,7 +107,7 @@
             // button4
             // 
             button4.BackColor = SystemColors.ControlLight;
-            button4.Location = new Point(12, 172);
+            button4.Location = new Point(12, 188);
             button4.Name = "button4";
             button4.Size = new Size(97, 77);
             button4.TabIndex = 3;
@@ -117,7 +118,7 @@
             // button9
             // 
             button9.BackColor = SystemColors.ControlLight;
-            button9.Location = new Point(244, 255);
+            button9.Location = new Point(244, 271);
             button9.Name = "button9";
             button9.Size = new Size(97, 77);
             button9.TabIndex = 8;
@@ -128,7 +129,7 @@
             // button8
             // 
             button8.BackColor = SystemColors.ControlLight;
-            button8.Location = new Point(129, 255);
+            button8.Location = new Point(129, 271);
             button8.Name = "button8";
             button8.Size = new Size(97, 77);
             button8.TabIndex = 7;
@@ -139,7 +140,7 @@
             // button7
             // 
             button7.BackColor = SystemColors.ControlLight;
-            button7.Location = new Point(12, 255);
+            button7.Location = new Point(12, 271);
             button7.Name = "button7";
             button7.Size = new Size(97, 77);
             button7.TabIndex = 6;
@@ -150,7 +151,7 @@
             // button0
             // 
             button0.BackColor = SystemColors.ControlLight;
-            button0.Location = new Point(244, 338);
+            button0.Location = new Point(244, 354);
             button0.Name = "button0";
             button0.Size = new Size(97, 77);
             button0.TabIndex = 11;
@@ -161,7 +162,7 @@
             // buttonDel
             // 
             buttonDel.BackColor = SystemColors.ControlLight;
-            buttonDel.Location = new Point(129, 338);
+            buttonDel.Location = new Point(129, 354);
             buttonDel.Name = "buttonDel";
             buttonDel.Size = new Size(97, 77);
             buttonDel.TabIndex = 10;
@@ -172,7 +173,7 @@
             // buttonPoint
             // 
             buttonPoint.BackColor = SystemColors.ControlLight;
-            buttonPoint.Location = new Point(12, 338);
+            buttonPoint.Location = new Point(12, 354);
             buttonPoint.Name = "buttonPoint";
             buttonPoint.Size = new Size(97, 77);
             buttonPoint.TabIndex = 9;
@@ -183,16 +184,17 @@
             // montant
             // 
             montant.Font = new Font("Segoe UI", 20F);
-            montant.Location = new Point(12, 20);
+            montant.Location = new Point(12, 36);
             montant.Name = "montant";
-            montant.Size = new Size(329, 43);
+            montant.Size = new Size(266, 43);
             montant.TabIndex = 12;
+            montant.Text = "0";
             montant.TextAlign = HorizontalAlignment.Right;
             // 
             // buttonEuro
             // 
             buttonEuro.BackColor = SystemColors.ControlLight;
-            buttonEuro.Location = new Point(244, 441);
+            buttonEuro.Location = new Point(244, 457);
             buttonEuro.Name = "buttonEuro";
             buttonEuro.Size = new Size(97, 43);
             buttonEuro.TabIndex = 15;
@@ -203,7 +205,7 @@
             // buttonDCAN
             // 
             buttonDCAN.BackColor = SystemColors.ControlLight;
-            buttonDCAN.Location = new Point(129, 441);
+            buttonDCAN.Location = new Point(129, 457);
             buttonDCAN.Name = "buttonDCAN";
             buttonDCAN.Size = new Size(97, 43);
             buttonDCAN.TabIndex = 14;
@@ -214,7 +216,7 @@
             // buttonDUS
             // 
             buttonDUS.BackColor = SystemColors.ControlLight;
-            buttonDUS.Location = new Point(12, 441);
+            buttonDUS.Location = new Point(12, 457);
             buttonDUS.Name = "buttonDUS";
             buttonDUS.Size = new Size(97, 43);
             buttonDUS.TabIndex = 13;
@@ -222,14 +224,25 @@
             buttonDUS.UseVisualStyleBackColor = false;
             buttonDUS.Click += buttonDUS_Click;
             // 
-            // label1
+            // unit
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(254, 66);
-            label1.Name = "label1";
-            label1.Size = new Size(38, 15);
-            label1.TabIndex = 16;
-            label1.Text = "label1";
+            unit.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            unit.ImageAlign = ContentAlignment.MiddleLeft;
+            unit.Location = new Point(284, 36);
+            unit.Name = "unit";
+            unit.Size = new Size(57, 43);
+            unit.TabIndex = 16;
+            unit.Text = "EUR";
+            unit.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // tauxActu
+            // 
+            tauxActu.AutoSize = true;
+            tauxActu.Location = new Point(12, 9);
+            tauxActu.Name = "tauxActu";
+            tauxActu.Size = new Size(109, 15);
+            tauxActu.TabIndex = 17;
+            tauxActu.Text = "Taux non actualisés";
             // 
             // Form1
             // 
@@ -237,7 +250,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
             ClientSize = new Size(358, 504);
-            Controls.Add(label1);
+            Controls.Add(tauxActu);
+            Controls.Add(unit);
             Controls.Add(buttonEuro);
             Controls.Add(buttonDCAN);
             Controls.Add(buttonDUS);
@@ -254,6 +268,7 @@
             Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(button1);
+            FormBorderStyle = FormBorderStyle.Fixed3D;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
             Text = "Conversion de Taux de Change";
@@ -280,5 +295,7 @@
         private Button buttonDCAN;
         private Button buttonDUS;
         private Label label1;
+        private Label unit;
+        private Label tauxActu;
     }
 }

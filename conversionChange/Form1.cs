@@ -2,7 +2,7 @@ using System.Reflection.Metadata;
 using RestSharp;
 using Newtonsoft;
 using ClassExchangeAPI;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 
 namespace conversionChange
@@ -10,9 +10,11 @@ namespace conversionChange
     public partial class Form1 : Form
     {
         string monnaie = "euro";
+        float tauxUSDEUR = 0.94f;
+        float tauxUSDCAD = 1.365f;
 
         //Variable Globale
-        ExchangeConnection.Rootobject result; //Enregistre les données de l'API
+        ExchangeConnection.Rootobject? result; //Enregistre les données de l'API
 
         public Form1()
         {
@@ -32,16 +34,25 @@ namespace conversionChange
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                string rawResponse = response.Content;
+                string? rawResponse = response.Content;
 
                 //conversion des données
-                result = JsonConvert.DeserializeObject<ExchangeConnection.Rootobject>(rawResponse);
+                result = JsonSerializer.Deserialize<ExchangeConnection.Rootobject>(rawResponse);
 
-                if (result != null ) //si des données ont été reçues
+                if (result != null) //si des données ont été reçues
                 {
+                    tauxActu.Text = "Taux actualisés le : " + DateTime.Now.ToString();
                     foreach (var obj in result.rates)
                     {
-                        label1.Text = obj.ToString();
+                        if (obj.Key == "EUR") 
+                        {
+                            tauxUSDEUR = obj.Value; //Récupération du taux de change USD => EUR
+                        }
+                        else if(obj.Key == "CAD")
+                        {
+                            tauxUSDCAD = obj.Value; //Récupération du taux de change CAD => USD
+                        }
+                        
                     }
                 }
             }
@@ -91,14 +102,15 @@ namespace conversionChange
             //Conversion euro => Dollar US
             if (monnaie == "euro")
             {
-                montant.Text = Math.Round(float.Parse(montant.Text) * 1.06,2).ToString();
+                montant.Text = Math.Round(float.Parse(montant.Text) * 1/tauxUSDEUR, 2).ToString();
             }
             //Conversion Dollar CAN => Dollar US
             else if (monnaie == "dollars CAN")
             {
-                montant.Text = Math.Round(float.Parse(montant.Text) * 1.46,2).ToString();
+                montant.Text = Math.Round(float.Parse(montant.Text) * 1/tauxUSDCAD, 2).ToString();
             }
             monnaie = "dollars US";
+            unit.Text = "USD";
         }
 
         private void buttonDCAN_Click(object sender, EventArgs e)
@@ -111,14 +123,16 @@ namespace conversionChange
             //Conversion euro => Dollar CAN
             if (monnaie == "euro")
             {
-                montant.Text = Math.Round(float.Parse(montant.Text) * 1.47,2).ToString();
+                //Pour la conversion, on converti EUR en USD puis USD en CAD
+                montant.Text = Math.Round(float.Parse(montant.Text) * (tauxUSDCAD / tauxUSDEUR), 2).ToString();
             }
             //Conversion Dollar US => Dollar CAN
             else if (monnaie == "dollars US")
             {
-                montant.Text = Math.Round(float.Parse(montant.Text) * 0.73,2).ToString();
+                montant.Text = Math.Round(float.Parse(montant.Text) * tauxUSDCAD, 2).ToString();
             }
             monnaie = "dollars CAN";
+            unit.Text = "CAD";
         }
 
         private void buttonEuro_Click(object sender, EventArgs e)
@@ -131,14 +145,16 @@ namespace conversionChange
             //Conversion Dollar US => euro
             if (monnaie == "dollars US")
             {
-                montant.Text = Math.Round(float.Parse(montant.Text) * 0.94,2).ToString();
+                montant.Text = Math.Round(float.Parse(montant.Text) * tauxUSDEUR, 2).ToString();
             }
             //Conversion Dollar CAN => euro
             else if (monnaie == "dollars CAN")
             {
-                montant.Text = Math.Round(float.Parse(montant.Text) * 0.68,2).ToString();
+                //Pour la conversion, on converti CAD en USD puis USD en EUR
+                montant.Text = Math.Round(float.Parse(montant.Text) * (tauxUSDEUR / tauxUSDCAD), 2).ToString();
             }
             monnaie = "euro";
+            unit.Text = "EUR";
         }
     }
 }
