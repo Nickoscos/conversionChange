@@ -1,4 +1,9 @@
 using System.Reflection.Metadata;
+using RestSharp;
+using Newtonsoft;
+using ClassExchangeAPI;
+using Newtonsoft.Json;
+
 
 namespace conversionChange
 {
@@ -6,9 +11,40 @@ namespace conversionChange
     {
         string monnaie = "euro";
 
+        //Variable Globale
+        ExchangeConnection.Rootobject result; //Enregistre les données de l'API
+
         public Form1()
         {
             InitializeComponent();
+            getData();
+        }
+
+        private void getData()
+        {
+            //Appel de l'API
+            //Utilisation de RestSharp
+            //Source https://cdn.taux.live/api/ecb.json
+
+            var client = new RestClient("https://cdn.taux.live/api/");
+            var request = new RestRequest("ecb.json"); //Last bit of the request
+            var response = client.Execute(request); //Requete exécution
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                string rawResponse = response.Content;
+
+                //conversion des données
+                result = JsonConvert.DeserializeObject<ExchangeConnection.Rootobject>(rawResponse);
+
+                if (result != null ) //si des données ont été reçues
+                {
+                    foreach (var obj in result.rates)
+                    {
+                        label1.Text = obj.ToString();
+                    }
+                }
+            }
         }
 
         private void button_Click(object sender, EventArgs e)
